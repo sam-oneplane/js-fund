@@ -1,0 +1,5 @@
+2022/10/18	16:50:29	415b759a-ce6b-4f78-985f-a80b2bba9a42	Error: ENOENT: no such file or directory, open '/Users/smuel/Developer/JS/Examples/basicNode/views/404.html'
+2022/10/18	16:50:44	711d5784-7bcc-41f6-8d46-17123d987c2c	Error: ENOENT: no such file or directory, open '/Users/smuel/Developer/JS/Examples/basicNode/views/404.html'
+2022/10/18	16:54:48	fb12eadc-57eb-4539-a0d3-0909d08a2f30	Error: ENOENT: no such file or directory, open '/Users/smuel/Developer/JS/Examples/basicNode/views/404.html'
+2022/10/18	16:55:42	c1abdc3b-6ea1-4f2b-b365-a7aa5fd79837	Error: ENOENT: no such file or directory, open '/Users/smuel/Developer/JS/Examples/basicNode/views/404.html'
+2022/10/18	17:04:35	bfd809bf-8c0e-4592-8809-7954c41b70e4	Error: ENOENT: no such file or directory, open '/Users/smuel/Developer/JS/Examples/basicNode/views/404.html'

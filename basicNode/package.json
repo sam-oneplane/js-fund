@@ -1,0 +1,19 @@
+{
+  "name": "basicNode",
+  "version": "1.0.0",
+  "description": "basic node.js examples following dave gray",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "author": "samuel mashiach",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

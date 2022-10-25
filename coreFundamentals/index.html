@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Saver</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<!-- this is a comment in html -->
+<body>
+
+    <nav id="nav">
+        <div class="container" id="navContainer">
+             <h1 class="nav-header">Link Saver</h1>
+             <a id="addBtn">+</a>
+        </div>
+        
+    </nav>
+
+    
+    <div class="container">
+
+        <div id="addLinkContainer" class="full-screen-opaque hidden">
+            
+            <div class="panel" id="addLinkPanel">
+
+                <!-- Add a new link form for title url and category -->
+                <h3 class="header">Add Link</h3>
+                <form id="addListForm">
+
+                    <input type="text" name="title" class="form-control" 
+                    id="linkTitle" placeholder="Title">
+                    <input type="text" name="url" class="form-control" 
+                    id="linkUrl" placeholder="URL">
+                    <input type="text" name="category" class="form-control" 
+                    id="linkCategory" placeholder="Category (comma separated)">
+
+                    <div id="addedCategories"></div>
+
+                    <!-- Buttotns -->
+                    <input type="submit" id="submitButton" value="Submit">
+                    <input type="submit" id="cancelButton" value="Cancel">
+                </form>
+            </div>
+        </div>
+        <!-- Links panel in the document -->
+        <div id="linksList"></div>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
