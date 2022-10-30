@@ -1,33 +1,43 @@
 const person = {
     alive : true,
+    age: 52,
 }
-
 const musician = {
     plays : true,
 }
 
-//1.  this is object inheretence :  musician inherets from person
+const musician2 = {
+    sing : "solo",
+    plays : "guitar",
+}
 
-musician.__proto__ = person;
+//1. object inheritance :  musician inherits from person
+
+musician.__proto__ = person; // {alive: true, plays: true}
 console.log(musician.alive); // true
-console.log(musician);
+
+// ********************************
+// no circular inheritance allowed
+// __proto__ must be Object or Null
+// Object can inherit only from other Object
+// ********************************  
+
 
 // 2. using get/setPrototypeOf methods
 
-Object.setPrototypeOf(musician, person);
-console.log(Object.getPrototypeOf(musician));
-console.log(musician.alive);
+Object.setPrototypeOf(musician2, person); // musician2 inherits from person
+console.log(Object.getPrototypeOf(musician2)); // {alive: true, plays: true}
+console.log(musician2); // true
 
-// 3. extend the prototyoe chain 
+// 3. extend the prototype chain 
 
 const guitarist = {
     strings : 6,
     // __proto__ : musician  example of old code 
 }
-Object.setPrototypeOf(guitarist, musician);
+Object.setPrototypeOf(guitarist, musician2);
 console.log(Object.getPrototypeOf(guitarist));
-console.log(guitarist.__proto__);
-console.log(Object.getPrototypeOf(guitarist) == guitarist.__proto__);
+console.log(Object.getPrototypeOf(guitarist) == guitarist.__proto__); // true
 
 // 4,Object setter & getter
 
@@ -42,41 +52,46 @@ const Car = {
     }
 }
 
-const laxuryCar = {};
-Object.setPrototypeOf(laxuryCar, Car);
-laxuryCar.seatMaterial = "leather";
-console.log(laxuryCar);
-console.log(Car);
-console.log(laxuryCar.valueOf());
+const newCar = {};
+Object.setPrototypeOf(newCar, Car);
+console.log(newCar);
+newCar.seatMaterial = "leather"; // use get  to get new Car.seats and update newCar.seats
+console.log(newCar);
 
 // walking up the chain from child to origin object 
 // props snd methods are not copied
-Object.keys(laxuryCar).forEach((key) => {
-    console.log(key);
+Object.keys(newCar).forEach((key) => {
+    console.log(key);  // one key created by:    newCar.seatMaterial = "leather";
 })
-// if we use for (let in) it is iclude the inherited objects 
+// if we use for (let in) it is include the inherited objects 
 // from car (doors, seats, seatMaterial)
+for (let key in newCar) {
+    console.log(key);
+}
 
-5. // Object constractor
 
+5. // Object constructor function
 function Animal(species) {
     this.species = species;
     this.eats = true;
 }
-// add inherited function to Animal object 
+
+// add inherited function to Animal object using prototype
+// prototype store method that can be inherited
 Animal.prototype.walks = function () {
     return `the ${this.species} is walking`;
 }
 
+// create an Object from function
 const Bear = new Animal("bear");
 // this 2 are the same :
 console.log(Bear); // Bear proto is inherited from Animal prototype
-console.log(Animal.prototype == Bear.__proto__);
+console.log(Animal.prototype === Bear.__proto__); 
+// the Bear __proto__  is mat he has inherits from Animal.prototype 
+// which is store method that can be inherited (walks) 
 
-console.log(Bear);
 
-
-// ES6 class inheritence
+// ES6 class inherit
 
 class Vehicle {
     constructor() {
@@ -90,9 +105,10 @@ class Vehicle {
 
 class Motorcycle extends Vehicle {
     constructor() {
-        super() ; // refferer to this of Vehicle
+        super() ; // referer to this 
         this.wheels = 2;
         this.motorCCsize = 850;
+        this.bikeType = "road";
     }
 
     ride () {
