@@ -38,9 +38,8 @@ const butter = () => {
 
 // Use composition to add the methods to the objects 
 // You are never defining the same method twice!
-
 const createPizza = (size, crust, sauce) => {
-    // pizza parameters
+    // pizza object
     const pizza = {
         size: size,
         crust: crust,
@@ -55,6 +54,8 @@ const createPizza = (size, crust, sauce) => {
         ...ready()
     }
 }
+
+
 
 const createSalad = (size, dressing) => {
     return {
@@ -76,27 +77,26 @@ const createStuffedButteredCrustPizza = (pizza) => {
 }
 
 
+
 // 1. 
-const anotherPizza = createPizza("medium", "thin", "original");
-const davesPizza = createStuffedButteredCrustPizza(anotherPizza);
-// OR
+const basicPizza = createPizza("medium", "thin", "original");
+console.log(basicPizza);
+const davesPizza = createStuffedButteredCrustPizza(basicPizza);
+console.log(davesPizza);
+console.log(davesPizza.bake().reverse()); //chaining
+// OR nested call
 //const davesPizza =
 //    createStuffedButteredCrustPizza(createPizza("medium", "thin", "original"));
 const davesSalad = createSalad("side", "ranch");
 
+
 // 2.
-davesPizza.bake();
-console.log(davesPizza.bake().reverse()); //chaining
-davesPizza.stuff();
-davesSalad.prepare();
-console.log(davesPizza);
+// add toppings to pizza without mutating original pizza 
 
-// add topings to pizza without mutating original pizza 
-
+//shallow copy using decorator function (imperative)
 /*
-closure function
 const shallowPizzaClone = (fn) => {
-    // return anonimous func that return fn with cloned newObj and arr 
+    // return anonymous func that return fn with cloned newObj and arr 
     return (obj, arr) => {
         const newObj = {...obj};
         return fn(newObj, arr);
@@ -105,21 +105,25 @@ const shallowPizzaClone = (fn) => {
 */
 
 
-//curry function
+//shallow copy using curry function (declarative)
 const shallowPizzaClone = (fn) => (obj, arr) => fn({...obj}, arr);
 
-let addToppings = (pizza, tp_arr) => {
-    pizza.toppings = [...pizza.toppings, ...tp_arr];
+let addToppings = (pizza, toppings) => {
+    pizza.toppings = [...pizza.toppings, ...toppings];
     return pizza;
 }
 
-addToppings = shallowPizzaClone(addToppings);
-//we get addTooping(newPizza, tp_arr)
+console.log(addToppings);
 
+addToppings = shallowPizzaClone(addToppings);
+//we get addTopping(newPizza, tp_arr)
+console.log(addToppings(createPizza("medium", "thin", "original"), ["olives", "cheese", "pepperoni"]));
 
 const timsPizza = createPizza("medium", "thin", "original");
-const timsNewPizza = addToppings(timsPizza, ["olivs", "pepperoni"]);
-console.log(timsPizza);
+const timsNewPizza = addToppings(timsPizza, ["olives", "pepperoni"]);
 console.log(timsNewPizza);
 
+// all together
+const myPizza = shallowPizzaClone(addToppings)(createPizza("large", "thick", "tomato"), ["green olives", "mushroom", "pepperoni"]);
+console.log(myPizza);
 

@@ -1,17 +1,16 @@
-const ids = [1,2,3,4,5,6,7,8,9,10];
+const ids = [3,4,5,8,9,10];
 
 const initApp = async () => {
-    getPostSerialized2(ids);
+    getPostConcurrently(ids);
+    getPostSerialized(ids);
+    getPostWithPromise(ids);
 }
 
 // when the DOM is loaded it will call initApp
 document.addEventListener('DOMContentLoaded', initApp);
 
 const getPost = async (id) => {
-    const post = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    console.log(post);
-    const data = await post.json();
-    return data; 
+    return  await (await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)).json(); 
 }
 
 // don't use ids.forEach() it is not async iterator so await want work
@@ -23,16 +22,17 @@ const getPostSerialized = async (ids) => {
 }
 
 // faster solution using Promise and high order map function
+// if one fail they all fail
 const getPostConcurrently = async (ids) => {
-    const posts = await Promise.allSettled(ids.map(async (id) => getPost(id)))
+    const posts = await Promise.allSettled(ids.map(async (id) => getPost(id)));
     console.log(posts);
 }
 
-const getPostSerialized2 = async (ids) => {
+const getPostWithPromise = async (ids) => {
     await ids.reduce( async (acc, id) => {
-        // await for prev promise
+        // await for prev promise to resolve 
         await acc; // keep it serialize when acc resolve promise
         const post = await getPost(id);
         console.log(post);
-    },Promise.resolve) // promise resolve is the init promise
+    },Promise.resolve) // promise resolve for init stage 1st element
 }

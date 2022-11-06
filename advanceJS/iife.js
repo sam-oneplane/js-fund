@@ -1,7 +1,7 @@
-// immidiatly invoked function expresion 
+// immediately invoked function expression 
 
 /*
-tamplates:
+templates:
 
 (() => {
     do staff 
@@ -17,25 +17,34 @@ tamplates:
 
 */
 
+// iife in global scope with recursion immediately invoked when saving file running on browser 
 (function f() {
     num++;
     console.log(num);
-    return num != 5 ? f(num) : console.log('done'); 
-})(num = 1);
+    return num < 5 ? f(num) : console.log('done'); 
+})(num = 2);
 
 
+// iife to reset counter with closure counter
 const increment = (() => {
-    counter = 0; // init counter called once
-    console.log(counter);
+    let counter = 0; // init counter is reset once when function is initiated
+    console.log(counter); 
+    const credits = (num) => console.log(`num of credits ${num}`);
     return () => {
-        counter++;
-        console.log(counter);
+        counter++ ;
+        credits(counter);
     }
 })();
-
+// increment = () => {counter++; credits(counter)} 
+// the lexical scope enables access to counter and credits by increment()
+// counter & credits are private to increment (not accessible in the global scope)
+increment();
 increment();
 
+
+// module pattern with iife
 const Score = (() => {
+    // private var
     count = 0;
     // private methods
     current = () => {return count;};
@@ -55,29 +64,18 @@ Score.inc();
 console.log(Score.current());
 
 
-// inject namespace
+// inject namespace object
 ((namespace) => {
     namespace.count = 0;
+    // using  function() so we can use this.
     namespace.inc = function() {this.count++ ;};
     namespace.current =  function() {return this.count;};
     namespace.reset = function() {this.count = 0 ;};
-})(window.App = window.App || {})
+})(window.App = window.App || {}) // injecting a namespace (window.App) into iife
+//window : root object in the global scope  
 
 App.inc() ;
 console.log(App.current());
+App.reset();
+console.log(App.current());
 
-
-// Hoisting 
-
-const initApp = () => {
-    console.log(stepOne);
-    stepOne(); // anonimous func  not declared at this point 
-}
-
-// event listener for all content of initApp
-document.addEventListener("DOMContentLoaded", initApp);
-
-// anonimous func  declared stepOne initializid
-const stepOne = () => {
-    console.log("stepOne");
-}
